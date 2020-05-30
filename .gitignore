@@ -118,3 +118,4 @@ dist
 # Custom
 
 config/config.json
+.DS_Store
