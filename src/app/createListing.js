@@ -1,11 +1,15 @@
 const inquirer = require('inquirer');
+const log = require('@harvey1717/logger')();
 const getCsrfToken = require.main.require('./app/getCsrfToken');
+const { listingDelay } = require.main.require('../config/config');
+const waitFor = (ms) => new Promise((res) => setTimeout(res, ms));
 
 module.exports = (rSes, prodId, sizeId) => {
   return new Promise(async (resolve, reject) => {
     try {
-      const listingPrice = await askForPrice();
+      const listingPrice = parseFloat(await askForInput('Listing price: £'));
       const sellMethod = await askForSellMethod();
+      const quantity = await askForInput('Amount of times to create this listing: ');
 
       const sellerfee = {
         consignment: 0.95,
@@ -46,6 +50,22 @@ module.exports = (rSes, prodId, sizeId) => {
         throw new Error('Sell method error');
       }
 
+      for (let c = 0; c < parseInt(quantity); c++) {
+        const success = await createListing(rSes, formData);
+        if (success) log.msuccess(c + 1, 'LISTING CREATED!');
+        else log.merror(c, `LISTING ERROR -> SUCCESS "${success}"`);
+        log.log('Delaying');
+        await waitFor(listingDelay);
+      }
+    } catch (ex) {
+      reject(ex);
+    }
+  });
+};
+
+function createListing(rSes, formData) {
+  return new Promise(async (resolve, reject) => {
+    try {
       const res = await rSes({
         method: 'POST',
         uri: 'https://restocks.eu/account/sell/create',
@@ -71,21 +91,20 @@ module.exports = (rSes, prodId, sizeId) => {
       reject(ex);
     }
   });
-};
+}
 
-function askForPrice() {
+function askForInput(msg) {
   return new Promise((resolve, reject) => {
     inquirer
       .prompt([
         {
           type: 'input',
           name: 'input',
-          message: 'Type listing price: £',
+          message: msg,
         },
       ])
       .then(async (answer) => {
-        const listingPrice = parseFloat(answer.input);
-        resolve(listingPrice);
+        resolve(answer.input);
       })
       .catch((error) => {
         if (error.isTtyError) {

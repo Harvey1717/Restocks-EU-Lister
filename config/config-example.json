@@ -1,5 +1,5 @@
 {
-  "email": "",
-  "password": "",
-  "listingDelay": "NOT_IMPLEMENTED"
+  "email": "johndoe@email.com",
+  "password": "Password123",
+  "listingDelay": 5000
 }
