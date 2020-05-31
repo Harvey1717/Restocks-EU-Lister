@@ -22,8 +22,9 @@ log.message('RESTOCKS.EU AUTO LISTER');
     log.log(`LOG IN SUCCESS -> "${status}"`);
     const selectedProd = await searchProducts(rSes);
     const selectedSize = await logSizes(rSes, selectedProd);
-    await createListing(rSes, selectedProd.id, selectedSize.id);
-    log.success('LISTING CREATED!');
+    const success = await createListing(rSes, selectedProd.id, selectedSize.id);
+    if (!success) log.error(`LISTING ERROR -> SUCCESS "${success}"`);
+    else log.success('LISTING CREATED!');
   } catch (ex) {
     log.error(ex.message);
   }
