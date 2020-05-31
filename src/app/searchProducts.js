@@ -1,4 +1,5 @@
 const inquirer = require('inquirer');
+const logSearchResults = require.main.require('./app/logSearchResults');
 
 module.exports = (rSes) => {
   return new Promise(async (resolve, reject) => {
@@ -20,7 +21,7 @@ module.exports = (rSes) => {
             },
             json: true,
           });
-          searchResults = res.data.map((prod) => {
+          let searchResults = res.data.map((prod) => {
             return {
               id: prod.id,
               name: prod.name,
@@ -28,10 +29,12 @@ module.exports = (rSes) => {
               image: prod.image,
             };
           });
-          resolve(searchResults.slice(0, 3));
+          searchResults = searchResults.slice(0, 3);
+          if (!searchResults > 0) throw Error('Cannot find any products with them keywords');
+          const selectedProd = await logSearchResults(searchResults);
+          resolve(selectedProd);
         })
         .catch((error) => {
-          console.log(error);
           if (error.isTtyError) {
             reject(new Error('Prompt cannot be rendered'));
           } else {

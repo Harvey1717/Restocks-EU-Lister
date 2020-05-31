@@ -10,7 +10,7 @@ module.exports = (rSes) => {
       const token = $('[name="_token"]').val();
       resolve(token);
     } catch (ex) {
-      reject(new Error('An error occured while trying to login'));
+      reject(new Error('An error occured while trying to get a token'));
     }
   });
 };

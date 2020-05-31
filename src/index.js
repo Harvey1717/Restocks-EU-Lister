@@ -2,7 +2,13 @@ const log = require('@harvey1717/logger')();
 const request = require('request-promise-native');
 const login = require.main.require('./app/login');
 const searchProducts = require.main.require('./app/searchProducts');
-const logSearchResults = require.main.require('./app/logSearchResults');
+const logSizes = require.main.require('./app/logSizes');
+const createListing = require.main.require('./app/createListing');
+
+// TODO
+// * Size selection
+// * Auto lowest ask/price selection
+// * Method of sale
 
 const rSes = request.defaults({
   jar: request.jar(),
@@ -13,12 +19,12 @@ log.message('RESTOCKS.EU AUTO LISTER');
 (async () => {
   try {
     const status = await login(rSes);
-    log.log(`LOG IN SUCCESS -> [${status}]`);
-    const searchResults = await searchProducts(rSes);
-    if (!searchResults > 0) throw Error('Cannot find any products with them keywords');
-    await logSearchResults(searchResults);
+    log.log(`LOG IN SUCCESS -> "${status}"`);
+    const selectedProd = await searchProducts(rSes);
+    const selectedSize = await logSizes(rSes, selectedProd);
+    await createListing(rSes, selectedProd.id, selectedSize.id);
+    log.success('Your product has been listed');
   } catch (ex) {
-    console.log(ex);
     log.error(ex.message);
   }
 })();

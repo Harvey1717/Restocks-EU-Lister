@@ -1,0 +1,120 @@
+const inquirer = require('inquirer');
+const getCsrfToken = require.main.require('./app/getCsrfToken');
+
+module.exports = (rSes, prodId, sizeId) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const listingPrice = await askForPrice();
+      const sellMethod = await askForSellMethod();
+
+      const sellerfee = {
+        consignment: 0.95,
+        resale: 0.9,
+      };
+
+      function getPayout(listingPrice) {
+        const payout = parseInt(listingPrice) * sellerfee[sellMethod] - 10;
+        if (payout < 0) {
+          payout = 0;
+        }
+        return payout.toFixed(2);
+      }
+
+      const formData = {
+        _token: await getCsrfToken(rSes),
+        baseproduct_id: prodId,
+        condition: '1',
+        size_id: sizeId,
+        price: getPayout(listingPrice), // * Payout
+        store_price: listingPrice, // * User set listing price
+        sell_method: sellMethod,
+        duration: '30',
+        checkbox1_resale: '',
+        checkbox2_resale: '',
+        checkbox1_consignment: '',
+        checkbox2_consignment: '',
+      };
+
+      if (sellMethod === 'resale') {
+        formData.checkbox1_resale = '1';
+        formData.checkbox2_resale = '1';
+      } else if (sellMethod === 'consignment') {
+        formData.checkbox1_consignment = '1';
+        formData.checkbox2_consignment = '1';
+      } else {
+        throw new Error('Sell method error');
+      }
+
+      await rSes({
+        method: 'POST',
+        uri: 'https://restocks.eu/account/sell/create',
+        headers: {
+          authority: 'restocks.eu',
+          accept: 'application/json, text/javascript, */*; q=0.01',
+          'x-requested-with': 'XMLHttpRequest',
+          'user-agent':
+            'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36',
+          'content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
+          origin: 'https://restocks.eu',
+          'sec-fetch-site': 'same-origin',
+          'sec-fetch-mode': 'cors',
+          'sec-fetch-dest': 'empty',
+          referer: 'https://restocks.eu/account/sell',
+          'accept-language': 'en-US,en;q=0.9',
+        },
+        form: formData,
+      });
+      resolve();
+    } catch (ex) {
+      reject(new Error('An error occured while trying to create a listing'));
+    }
+  });
+};
+
+function askForPrice() {
+  return new Promise((resolve, reject) => {
+    inquirer
+      .prompt([
+        {
+          type: 'input',
+          name: 'input',
+          message: 'Type listing price: £',
+        },
+      ])
+      .then(async (answer) => {
+        const listingPrice = parseFloat(answer.input);
+        resolve(listingPrice);
+      })
+      .catch((error) => {
+        if (error.isTtyError) {
+          reject(new Error('Prompt cannot be rendered'));
+        } else {
+          reject(new Error('Unrecognised prompt error'));
+        }
+      });
+  });
+}
+
+function askForSellMethod() {
+  return new Promise((resolve, reject) => {
+    inquirer
+      .prompt([
+        {
+          type: 'list',
+          name: 'sellMethod',
+          message: 'Select Sale Method:',
+          choices: ['resale', 'consignment'],
+        },
+      ])
+      .then((answer) => {
+        resolve(answer.sellMethod);
+      })
+      .catch((error) => {
+        if (error.isTtyError) {
+          reject(new Error('Prompt cannot be rendered'));
+        } else {
+          reject(new Error('Unrecognised prompt error'));
+        }
+      });
+  });
+}

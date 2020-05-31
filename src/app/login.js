@@ -1,6 +1,6 @@
 const cheerio = require('cheerio');
-const getToken = require.main.require('./app/getToken');
 const { email, password } = require.main.require('../config/config');
+const getLoginToken = require.main.require('./app/getLoginToken');
 
 module.exports = (rSes) => {
   return new Promise(async (resolve, reject) => {
@@ -10,7 +10,7 @@ module.exports = (rSes) => {
         method: 'POST',
         uri: 'https://restocks.eu/login',
         form: {
-          _token: await getToken(rSes),
+          _token: await getLoginToken(rSes),
           email,
           password,
         },
