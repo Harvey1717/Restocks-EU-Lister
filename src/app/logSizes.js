@@ -28,7 +28,7 @@ module.exports = (rSes, selectedProd) => {
           }
         });
     } catch (ex) {
-      reject(new Error('An error occured while trying to find products'));
+      reject(ex);
     }
   });
 };

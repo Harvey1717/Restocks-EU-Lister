@@ -32,7 +32,7 @@ module.exports = (rSes) => {
         reject(new Error('Logged in status is false'));
       }
     } catch (ex) {
-      reject(new Error('An error occured while trying to login'));
+      reject(ex);
     }
   });
 };

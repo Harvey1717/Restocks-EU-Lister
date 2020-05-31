@@ -25,7 +25,7 @@ module.exports = (searchResults) => {
           }
         });
     } catch (ex) {
-      reject(new Error('An error occured while trying to show products'));
+      reject(ex);
     }
   });
 };

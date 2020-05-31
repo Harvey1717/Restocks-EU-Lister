@@ -39,34 +39,35 @@ module.exports = (rSes, prodId, sizeId) => {
         formData.checkbox1_resale = '1';
         formData.checkbox2_resale = '1';
       } else if (sellMethod === 'consignment') {
+        throw new Error('Cosginment method temporarily disabled by Dev');
         formData.checkbox1_consignment = '1';
         formData.checkbox2_consignment = '1';
       } else {
         throw new Error('Sell method error');
       }
 
-      await rSes({
-        method: 'POST',
-        uri: 'https://restocks.eu/account/sell/create',
-        headers: {
-          authority: 'restocks.eu',
-          accept: 'application/json, text/javascript, */*; q=0.01',
-          'x-requested-with': 'XMLHttpRequest',
-          'user-agent':
-            'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36',
-          'content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
-          origin: 'https://restocks.eu',
-          'sec-fetch-site': 'same-origin',
-          'sec-fetch-mode': 'cors',
-          'sec-fetch-dest': 'empty',
-          referer: 'https://restocks.eu/account/sell',
-          'accept-language': 'en-US,en;q=0.9',
-        },
-        form: formData,
-      });
+      // await rSes({
+      //   method: 'POST',
+      //   uri: 'https://restocks.eu/account/sell/create',
+      //   headers: {
+      //     authority: 'restocks.eu',
+      //     accept: 'application/json, text/javascript, */*; q=0.01',
+      //     'x-requested-with': 'XMLHttpRequest',
+      //     'user-agent':
+      //       'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36',
+      //     'content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
+      //     origin: 'https://restocks.eu',
+      //     'sec-fetch-site': 'same-origin',
+      //     'sec-fetch-mode': 'cors',
+      //     'sec-fetch-dest': 'empty',
+      //     referer: 'https://restocks.eu/account/sell',
+      //     'accept-language': 'en-US,en;q=0.9',
+      //   },
+      //   form: formData,
+      // });
       resolve();
     } catch (ex) {
-      reject(new Error('An error occured while trying to create a listing'));
+      reject(ex);
     }
   });
 };

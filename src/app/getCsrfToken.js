@@ -10,7 +10,7 @@ module.exports = (rSes) => {
       const token = $('[name="csrf-token"]').attr('content');
       resolve(token);
     } catch (ex) {
-      reject(new Error('An error occured while trying to get a token'));
+      reject(ex);
     }
   });
 };

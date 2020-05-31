@@ -42,7 +42,7 @@ module.exports = (rSes) => {
           }
         });
     } catch (ex) {
-      reject(new Error('An error occured while trying to find products'));
+      reject(ex);
     }
   });
 };
