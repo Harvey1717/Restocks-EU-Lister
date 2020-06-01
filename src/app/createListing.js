@@ -54,7 +54,8 @@ module.exports = (rSes, prodId, sizeId) => {
         const success = await createListing(rSes, formData);
         if (success) log.msuccess(c + 1, 'LISTING CREATED!');
         else log.merror(c, `LISTING ERROR -> SUCCESS "${success}"`);
-        log.log('Delaying');
+        if (c + 1 === parseInt(quantity)) return resolve();
+        log.log('DELAY');
         await waitFor(listingDelay);
       }
     } catch (ex) {
