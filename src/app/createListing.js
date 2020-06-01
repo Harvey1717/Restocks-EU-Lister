@@ -1,13 +1,13 @@
 const inquirer = require('inquirer');
 const log = require('@harvey1717/logger')();
 const getCsrfToken = require.main.require('./app/getCsrfToken');
-const { listingDelay } = require.main.require('../config/config');
+const { listingDelay, lowestAskDifference } = require.main.require('../config/config');
 const waitFor = (ms) => new Promise((res) => setTimeout(res, ms));
 
 module.exports = (rSes, prodId, sizeId) => {
   return new Promise(async (resolve, reject) => {
     try {
-      const listingPrice = parseFloat(await askForInput('Listing price: €'));
+      let listingPrice = parseFloat(await askForInput('Listing price: €'));
       const sellMethod = await askForSellMethod();
       const quantity = await askForInput('Amount of times to create this listing:');
 
@@ -23,6 +23,18 @@ module.exports = (rSes, prodId, sizeId) => {
         }
         return payout.toFixed(2);
       }
+
+      if (isNaN(listingPrice)) {
+        const res = await rSes({
+          uri: `https://restocks.eu/product/get-lowest-price/${prodId}/${sizeId}`,
+          json: true,
+        });
+        if (typeof res !== 'number') throw new Error('Error fetching lowest ask');
+        listingPrice = res + lowestAskDifference;
+        log.log(`Lowest ask -> € ${res}`);
+        log.log(`Using -> € ${listingPrice}`);
+      }
+      return;
 
       const formData = {
         _token: await getCsrfToken(rSes),

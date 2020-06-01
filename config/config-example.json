@@ -1,5 +1,6 @@
 {
   "email": "johndoe@email.com",
   "password": "Password123",
-  "listingDelay": 5000
+  "listingDelay": 5000,
+  "lowestAskDifference": -1
 }
