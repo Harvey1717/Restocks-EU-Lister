@@ -7,9 +7,9 @@ const waitFor = (ms) => new Promise((res) => setTimeout(res, ms));
 module.exports = (rSes, prodId, sizeId) => {
   return new Promise(async (resolve, reject) => {
     try {
-      const listingPrice = parseFloat(await askForInput('Listing price: £'));
+      const listingPrice = parseFloat(await askForInput('Listing price: €'));
       const sellMethod = await askForSellMethod();
-      const quantity = await askForInput('Amount of times to create this listing: ');
+      const quantity = await askForInput('Amount of times to create this listing:');
 
       const sellerfee = {
         consignment: 0.95,
