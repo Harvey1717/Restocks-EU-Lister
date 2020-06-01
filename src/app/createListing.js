@@ -30,6 +30,7 @@ module.exports = (rSes, prodId, sizeId) => {
           json: true,
         });
         if (typeof res !== 'number') throw new Error('Error fetching lowest ask');
+        if (res === 0) throw new Error('Lowest ask is 0');
         listingPrice = res + lowestAskDifference;
         log.log(`Lowest ask -> € ${res}`);
         log.log(`Using -> € ${listingPrice}`);
