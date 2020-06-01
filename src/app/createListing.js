@@ -35,7 +35,6 @@ module.exports = (rSes, prodId, sizeId) => {
         log.log(`Lowest ask -> € ${res}`);
         log.log(`Using -> € ${listingPrice}`);
       }
-      return;
 
       const formData = {
         _token: await getCsrfToken(rSes),
