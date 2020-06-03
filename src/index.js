@@ -1,6 +1,6 @@
 const log = require('@harvey1717/logger')();
 const request = require('request-promise-native');
-const { listingDelay } = require.main.require('../config/config');
+const { delay } = require.main.require('../config/config');
 const waitFor = (ms) => new Promise((res) => setTimeout(res, ms));
 
 const login = require.main.require('./app/login');
@@ -49,7 +49,7 @@ async function scan(rSes) {
       c++;
       const { changeNeeded, lowestAsk } = await checkListing(rSes, c, listing);
       if (changeNeeded) await updateListing(rSes, c, listing.productId, lowestAsk);
-      await waitFor(listingDelay);
+      await waitFor(delay);
     } catch (ex) {
       log.error(ex.message);
     }

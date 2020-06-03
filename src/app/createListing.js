@@ -2,7 +2,7 @@ const inquirer = require('inquirer');
 const log = require('@harvey1717/logger')();
 const getCsrfToken = require.main.require('./app/getCsrfToken');
 const getPayout = require.main.require('./app/getPayout');
-const { listingDelay, lowestAskDifference } = require.main.require('../config/config');
+const { delay, lowestAskDifference } = require.main.require('../config/config');
 const waitFor = (ms) => new Promise((res) => setTimeout(res, ms));
 
 module.exports = (rSes, prodId, sizeId) => {
@@ -56,7 +56,7 @@ module.exports = (rSes, prodId, sizeId) => {
         else log.error(`LISTING ERROR -> SUCCESS "${success}"`);
         if (c + 1 === parseInt(quantity)) return resolve();
         log.log('DELAY');
-        await waitFor(listingDelay);
+        await waitFor(delay);
       }
     } catch (ex) {
       reject(ex);
