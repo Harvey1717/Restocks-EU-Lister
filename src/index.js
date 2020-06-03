@@ -12,11 +12,6 @@ const getListingsInfo = require.main.require('./app/scan/getListingsInfo');
 const checkListing = require.main.require('./app/scan/checkListing');
 const updateListing = require.main.require('./app/scan/updateListing');
 
-// TODO
-// * Size selection
-// * Auto lowest ask/price selection
-// * Method of sale
-
 const rSes = request.defaults({
   jar: request.jar(),
 });

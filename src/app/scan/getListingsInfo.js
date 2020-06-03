@@ -11,8 +11,6 @@ module.exports = (rSes) => {
         json: true,
       });
 
-      // * baseproductid/sizeid/productid
-
       const $ = cheerio.load(res.products);
       const listings = $('tr.clickable');
       
