@@ -15,8 +15,7 @@ module.exports = (rSes) => {
         });
 
         pageNumber++;
-        if (res.products.includes('You have no advertisements yet')) break;
-
+        if (res.products.includes('You have no advertisements yet')) resolve(listingsInfo);
         const $ = cheerio.load(res.products);
         const listings = $('tr.clickable');
 
@@ -29,7 +28,6 @@ module.exports = (rSes) => {
           });
         });
       }
-      resolve(listingsInfo);
     } catch (ex) {
       reject(ex);
     }
