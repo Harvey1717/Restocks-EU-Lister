@@ -20,10 +20,11 @@ log.message('RESTOCKS.EU AUTO LISTER');
   try {
     const status = await login(rSes);
     log.log(`LOG IN SUCCESS -> "${status}"`);
-    const selectedProd = await searchProducts(rSes);
-    const selectedSize = await logSizes(rSes, selectedProd);
-    await createListing(rSes, selectedProd.id, selectedSize.id);
-    log.warn('Exiting...');
+    while (true) {
+      const selectedProd = await searchProducts(rSes);
+      const selectedSize = await logSizes(rSes, selectedProd);
+      await createListing(rSes, selectedProd.id, selectedSize.id);
+    }
   } catch (ex) {
     log.error(ex.message);
   }
