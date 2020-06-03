@@ -4,7 +4,7 @@ module.exports = (rSes) => {
   return new Promise(async (resolve, reject) => {
     try {
       const res = await rSes({
-        uri: 'https://restocks.eu/account/sell',
+        uri: 'https://restocks.eu/account',
       });
       const $ = cheerio.load(res);
       const token = $('[name="csrf-token"]').attr('content');

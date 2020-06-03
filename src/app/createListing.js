@@ -1,6 +1,7 @@
 const inquirer = require('inquirer');
 const log = require('@harvey1717/logger')();
 const getCsrfToken = require.main.require('./app/getCsrfToken');
+const getPayout = require.main.require('./app/getPayout');
 const { listingDelay, lowestAskDifference } = require.main.require('../config/config');
 const waitFor = (ms) => new Promise((res) => setTimeout(res, ms));
 
@@ -10,19 +11,6 @@ module.exports = (rSes, prodId, sizeId) => {
       let listingPrice = parseFloat(await askForInput('Listing price: €'));
       const sellMethod = await askForSellMethod();
       const quantity = await askForInput('Amount of times to create this listing:');
-
-      const sellerfee = {
-        consignment: 0.95,
-        resale: 0.9,
-      };
-
-      function getPayout(listingPrice) {
-        const payout = parseInt(listingPrice) * sellerfee[sellMethod] - 10;
-        if (payout < 0) {
-          payout = 0;
-        }
-        return payout.toFixed(2);
-      }
 
       if (isNaN(listingPrice)) {
         const res = await rSes({
@@ -41,7 +29,7 @@ module.exports = (rSes, prodId, sizeId) => {
         baseproduct_id: prodId,
         condition: '1',
         size_id: sizeId,
-        price: getPayout(listingPrice), // * Payout
+        price: getPayout(listingPrice, sellMethod), // * Payout
         store_price: listingPrice, // * User set listing price
         sell_method: sellMethod,
         duration: '30',
@@ -65,7 +53,7 @@ module.exports = (rSes, prodId, sizeId) => {
       for (let c = 0; c < parseInt(quantity); c++) {
         const success = await createListing(rSes, formData);
         if (success) log.msuccess(c + 1, 'LISTING CREATED!');
-        else log.merror(c, `LISTING ERROR -> SUCCESS "${success}"`);
+        else log.error(`LISTING ERROR -> SUCCESS "${success}"`);
         if (c + 1 === parseInt(quantity)) return resolve();
         log.log('DELAY');
         await waitFor(listingDelay);
