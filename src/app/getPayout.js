@@ -6,7 +6,8 @@ const sellerfee = {
 module.exports = (listingPrice, sellMethod) => {
   const payout = parseInt(listingPrice) * sellerfee[sellMethod] - 10;
   if (payout < 0) {
-    payout = 0;
+    throw new Error('Payout would be set to 0');
+    // payout = 0;
   }
   return payout.toFixed(2);
 };

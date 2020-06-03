@@ -9,6 +9,8 @@ module.exports = (rSes, c, listing) => {
         json: true,
       });
 
+      if (res === 0) throw new Error('Lowest ask is 0');
+
       if (parseFloat(res) < parseFloat(listingPrice)) {
         log.mwarn(c, `LISTING PRICE [€${listingPrice}] IS HIGHER THAN LOWEST ASK [€${res}]`);
         resolve({ changeNeeded: true, lowestAsk: res });
