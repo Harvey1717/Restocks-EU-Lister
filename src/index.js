@@ -28,7 +28,10 @@ log.message('RESTOCKS.EU AUTO LISTER');
         list(rSes);
       }
     } else {
-      scan(rSes);
+      while (true) {
+        scan(rSes);
+        await waitFor(1200000);
+      }
     }
   } catch (ex) {
     log.error(ex.message);
