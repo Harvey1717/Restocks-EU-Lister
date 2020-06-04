@@ -46,9 +46,9 @@ async function scan(rSes) {
   let c = 0;
   for (listing of listingsInfo) {
     try {
-      const cc = c++;
-      const { changeNeeded, lowestAsk } = await checkListing(rSes, cc, listing);
-      if (changeNeeded) await updateListing(rSes, cc, listing.productId, lowestAsk);
+      c++;
+      const { changeNeeded, lowestAsk } = await checkListing(rSes, c, listing);
+      if (changeNeeded) await updateListing(rSes, c, listing.productId, lowestAsk);
       await waitFor(delay);
     } catch (ex) {
       log.error(ex.message);
