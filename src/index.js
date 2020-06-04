@@ -20,15 +20,13 @@ log.message('RESTOCKS.EU AUTO LISTER');
 
 (async () => {
   try {
-    const status = await login(rSes);
-    log.log(`LOG IN SUCCESS -> "${status}"`);
     const mode = await getMode();
     if (mode.toLowerCase() === 'list') {
-      while (true) {
-        list(rSes);
-      }
+      list(rSes);
     } else {
       while (true) {
+        const status = await login(rSes);
+        log.log(`LOG IN SUCCESS -> "${status}"`);
         scan(rSes);
         await waitFor(1200000);
       }
@@ -39,9 +37,13 @@ log.message('RESTOCKS.EU AUTO LISTER');
 })();
 
 async function list(rSes) {
-  const selectedProd = await searchProducts(rSes);
-  const selectedSize = await logSizes(rSes, selectedProd);
-  await createListing(rSes, selectedProd.id, selectedSize.id);
+  const status = await login(rSes);
+  log.log(`LOG IN SUCCESS -> "${status}"`);
+  while (true) {
+    const selectedProd = await searchProducts(rSes);
+    const selectedSize = await logSizes(rSes, selectedProd);
+    await createListing(rSes, selectedProd.id, selectedSize.id);
+  }
 }
 
 async function scan(rSes) {
