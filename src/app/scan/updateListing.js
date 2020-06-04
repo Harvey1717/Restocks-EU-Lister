@@ -18,7 +18,7 @@ module.exports = (rSes, c, productId, lowestAsk) => {
         json: true,
       });
 
-      if (res.success) log.msuccess(c, `LISTING UPDATED -> €${userSetPrice}`);
+      if (res.success) log.msuccess(c, `LISTING [${productId}] UPDATED -> €${userSetPrice}`);
       else log.error(`LISTING ERROR -> SUCCESS "${success}"`);
       resolve();
     } catch (ex) {
