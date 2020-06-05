@@ -1,12 +1,17 @@
 const log = require('@harvey1717/logger')();
 const getCsrfToken = require.main.require('./app/getCsrfToken');
 const getPayout = require.main.require('./app/getPayout');
-const { lowestAskDifference } = require.main.require('../config/config');
+const { lowestAskDifference, specificConfig } = require.main.require('../config/config');
 
 module.exports = (rSes, c, productId, lowestAsk) => {
   return new Promise(async (resolve, reject) => {
     try {
-      const userSetPrice = lowestAsk + lowestAskDifference;
+      let userSetPrice = lowestAsk + lowestAskDifference;
+      const specificConfigForListing = specificConfig.find((el) => el.listingId);
+      if (specificConfigForListing) {
+        log.mlog(c, `USING SPECIFIC DIFFERENCE -> ${specificConfigForListing.lowestAskDifference}`);
+        userSetPrice = lowestAsk + specificConfigForListing.lowestAskDifference;
+      }
       const res = await rSes({
         uri: 'https://restocks.eu/account/listings/edit',
         method: 'POST',
