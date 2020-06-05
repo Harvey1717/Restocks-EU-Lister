@@ -28,7 +28,7 @@ log.message('RESTOCKS.EU AUTO LISTER');
         const status = await login(rSes);
         log.log(`LOG IN SUCCESS -> "${status}"`);
         scan(rSes);
-        await waitFor(1200000);
+        await waitFor(900000);
       }
     }
   } catch (ex) {

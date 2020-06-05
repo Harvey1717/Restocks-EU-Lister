@@ -7,9 +7,9 @@ module.exports = (rSes, c, productId, lowestAsk) => {
   return new Promise(async (resolve, reject) => {
     try {
       let userSetPrice = lowestAsk + lowestAskDifference;
-      const specificConfigForListing = specificConfig.find((el) => el.listingId);
+      const specificConfigForListing = specificConfig.find((el) => el.listingId === productId);
       if (specificConfigForListing) {
-        log.mlog(c, `USING SPECIFIC DIFFERENCE -> ${specificConfigForListing.lowestAskDifference}`);
+        log.mlog(productId, `USING SPECIFIC DIFFERENCE -> ${specificConfigForListing.lowestAskDifference}`);
         userSetPrice = lowestAsk + specificConfigForListing.lowestAskDifference;
       }
       const res = await rSes({
@@ -23,7 +23,7 @@ module.exports = (rSes, c, productId, lowestAsk) => {
         json: true,
       });
 
-      if (res.success) log.msuccess(c, `LISTING [${productId}] UPDATED -> €${userSetPrice}`);
+      if (res.success) log.msuccess(productId, `LISTING UPDATED -> €${userSetPrice}`);
       else log.error(`LISTING ERROR -> SUCCESS "${success}"`);
       resolve();
     } catch (ex) {
