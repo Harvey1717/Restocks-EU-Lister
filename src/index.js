@@ -55,7 +55,7 @@ async function scan(rSes) {
     try {
       c++;
       const { changeNeeded, lowestAsk } = await checkListing(rSes, c, listing);
-      if (changeNeeded) await updateListing(rSes, c, listing.productId, lowestAsk);
+      if (changeNeeded) await updateListing(rSes, c, listing.productId, lowestAsk, saleMethod);
       await waitFor(delay);
     } catch (ex) {
       log.error(ex.message);
