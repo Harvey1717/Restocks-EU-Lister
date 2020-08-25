@@ -11,6 +11,7 @@ const createListing = require.main.require('./app/createListing');
 const getListingsInfo = require.main.require('./app/scan/getListingsInfo');
 const checkListing = require.main.require('./app/scan/checkListing');
 const updateListing = require.main.require('./app/scan/updateListing');
+const getSaleMethod = require.main.require('./app/getSaleMethod');
 
 const rSes = request.defaults({
   jar: request.jar(),
@@ -47,7 +48,8 @@ async function list(rSes) {
 }
 
 async function scan(rSes) {
-  const listingsInfo = await getListingsInfo(rSes);
+  saleMethod = await getSaleMethod()
+  const listingsInfo = await getListingsInfo(rSes, saleMethod);
   let c = 0;
   for (listing of listingsInfo) {
     try {

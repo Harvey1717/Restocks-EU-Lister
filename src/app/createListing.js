@@ -2,6 +2,7 @@ const inquirer = require('inquirer');
 const log = require('@harvey1717/logger')();
 const getCsrfToken = require.main.require('./app/getCsrfToken');
 const getPayout = require.main.require('./app/getPayout');
+const getSaleMethod = require.main.require('./app/getSaleMethod');
 const { delay, lowestAskDifference } = require.main.require('../config/config');
 const waitFor = (ms) => new Promise((res) => setTimeout(res, ms));
 
@@ -9,7 +10,7 @@ module.exports = (rSes, prodId, sizeId) => {
   return new Promise(async (resolve, reject) => {
     try {
       let listingPrice = parseFloat(await askForInput('Listing price: €'));
-      const sellMethod = await askForSellMethod();
+      const sellMethod = await getSaleMethod();
       const quantity = await askForInput('Amount of times to create this listing:');
 
       if (isNaN(listingPrice)) {
@@ -106,30 +107,6 @@ function askForInput(msg) {
       ])
       .then(async (answer) => {
         resolve(answer.input);
-      })
-      .catch((error) => {
-        if (error.isTtyError) {
-          reject(new Error('Prompt cannot be rendered'));
-        } else {
-          reject(new Error('Unrecognised prompt error'));
-        }
-      });
-  });
-}
-
-function askForSellMethod() {
-  return new Promise((resolve, reject) => {
-    inquirer
-      .prompt([
-        {
-          type: 'list',
-          name: 'sellMethod',
-          message: 'Select Sale Method:',
-          choices: ['resale', 'consignment'],
-        },
-      ])
-      .then((answer) => {
-        resolve(answer.sellMethod);
       })
       .catch((error) => {
         if (error.isTtyError) {

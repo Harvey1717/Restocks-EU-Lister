@@ -1,6 +1,6 @@
 const cheerio = require('cheerio');
 
-module.exports = (rSes) => {
+module.exports = (rSes, saleMethod) => {
   return new Promise(async (resolve, reject) => {
     try {
       const listingsInfo = [];
@@ -8,7 +8,7 @@ module.exports = (rSes) => {
       while (true) {
         pageNumber++;
         const res = await rSes({
-          uri: 'https://restocks.eu/account/listings/resale',
+          uri: `https://restocks.eu/account/listings/${saleMethod}`,
           qs: {
             page: pageNumber,
           },
