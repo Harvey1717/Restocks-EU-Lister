@@ -3,7 +3,7 @@ const getCsrfToken = require.main.require('./app/getCsrfToken');
 const getPayout = require.main.require('./app/getPayout');
 const { lowestAskDifference, specificConfig } = require.main.require('../config/config');
 
-module.exports = (rSes, c, productId, lowestAsk) => {
+module.exports = (rSes, c, productId, lowestAsk, saleMethod) => {
   return new Promise(async (resolve, reject) => {
     try {
       let userSetPrice = lowestAsk + lowestAskDifference;
@@ -20,7 +20,7 @@ module.exports = (rSes, c, productId, lowestAsk) => {
         form: {
           _token: await getCsrfToken(rSes),
           id: productId,
-          price: getPayout(userSetPrice, 'resale'),
+          price: getPayout(userSetPrice, saleMethod),
         }, //* Price = Payout
         json: true,
       });
