@@ -14,7 +14,7 @@ module.exports = (searchResults) => {
           },
         ])
         .then((answer) => {
-          const selectedProduct = searchResults.find((prod) => prod.sku === answer.product.split(' - ')[1]);
+          const selectedProduct = searchResults.find((prod) => answer.product.includes(prod.sku));
           resolve(selectedProduct);
         })
         .catch((error) => {
