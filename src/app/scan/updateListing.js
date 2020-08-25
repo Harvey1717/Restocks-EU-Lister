@@ -7,11 +7,13 @@ module.exports = (rSes, c, productId, lowestAsk) => {
   return new Promise(async (resolve, reject) => {
     try {
       let userSetPrice = lowestAsk + lowestAskDifference;
+      /*
       const specificConfigForListing = specificConfig.find((el) => el.listingId === productId);
       if (specificConfigForListing) {
         log.mlog(productId, `USING SPECIFIC DIFFERENCE -> ${specificConfigForListing.lowestAskDifference}`);
         userSetPrice = lowestAsk + specificConfigForListing.lowestAskDifference;
       }
+      */
       const res = await rSes({
         uri: 'https://restocks.eu/account/listings/edit',
         method: 'POST',
