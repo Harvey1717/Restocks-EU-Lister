@@ -44,7 +44,6 @@ module.exports = (rSes, prodId, sizeId) => {
         formData.checkbox1_resale = '1';
         formData.checkbox2_resale = '1';
       } else if (sellMethod === 'consignment') {
-        throw new Error('Cosginment method temporarily disabled by Dev');
         formData.checkbox1_consignment = '1';
         formData.checkbox2_consignment = '1';
       } else {
