@@ -15,7 +15,7 @@ module.exports = (rSes, c, productId, lowestAsk, saleMethod) => {
       }
       */
       const res = await rSes({
-        uri: 'https://restocks.eu/account/listings/edit',
+        uri: 'https://restocks.net/account/listings/edit',
         method: 'POST',
         form: {
           _token: await getCsrfToken(rSes),

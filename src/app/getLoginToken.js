@@ -4,7 +4,7 @@ module.exports = (rSes) => {
   return new Promise(async (resolve, reject) => {
     try {
       const res = await rSes({
-        uri: 'https://restocks.eu/login',
+        uri: 'https://restocks.net/login',
       });
       const $ = cheerio.load(res);
       const token = $('[name="_token"]').val();

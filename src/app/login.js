@@ -8,7 +8,7 @@ module.exports = (rSes) => {
       let res;
       res = await rSes({
         method: 'POST',
-        uri: 'https://restocks.eu/login',
+        uri: 'https://restocks.net/login',
         form: {
           _token: await getLoginToken(rSes),
           email,
@@ -19,14 +19,14 @@ module.exports = (rSes) => {
         resolveWithFullResponse: true,
       });
       res = await rSes({
-        uri: 'https://restocks.eu/account',
+        uri: 'https://restocks.net/account',
         simple: false,
         followAllRedirects: true,
         resolveWithFullResponse: true,
       });
       const $ = cheerio.load(res.body);
       const status = $('#my__account > h1').text();
-      if (!res.request.href !== 'https://restocks.eu/account' && status.length > 0) {
+      if (!res.request.href !== 'https://restocks.net/account' && status.length > 0) {
         resolve(status);
       } else {
         reject(new Error('Logged in status is false'));

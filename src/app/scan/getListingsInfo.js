@@ -8,7 +8,7 @@ module.exports = (rSes, saleMethod) => {
       while (true) {
         pageNumber++;
         const res = await rSes({
-          uri: `https://restocks.eu/account/listings/${saleMethod}`,
+          uri: `https://restocks.net/account/listings/${saleMethod}`,
           qs: {
             page: pageNumber,
           },
