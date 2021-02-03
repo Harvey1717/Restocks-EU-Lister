@@ -25,10 +25,11 @@ log.message('RESTOCKS.EU AUTO LISTER');
     if (mode.toLowerCase() === 'list') {
       list(rSes);
     } else {
+      saleMethod = await getSaleMethod()
       while (true) {
         const status = await login(rSes);
         log.log(`LOG IN SUCCESS -> "${status}"`);
-        scan(rSes);
+        scan(rSes, saleMethod);
         await waitFor(900000);
       }
     }
@@ -47,8 +48,7 @@ async function list(rSes) {
   }
 }
 
-async function scan(rSes) {
-  saleMethod = await getSaleMethod()
+async function scan(rSes, saleMethod) {
   const listingsInfo = await getListingsInfo(rSes, saleMethod);
   let c = 0;
   for (listing of listingsInfo) {

@@ -8,7 +8,7 @@ module.exports = (rSes, saleMethod) => {
       while (true) {
         pageNumber++;
         const res = await rSes({
-          uri: `https://restocks.eu/account/listings/${saleMethod}`,
+          uri: `https://restocks.net/account/listings/${saleMethod}`,
           qs: {
             page: pageNumber,
           },
@@ -45,6 +45,7 @@ module.exports = (rSes, saleMethod) => {
             productId: $(elem).find('.productid').val(),
             baseProductId: $(elem).find('.baseproductid').val(),
             sizeId: $(elem).find('.sizeid').val(),
+            productName: $(elem).find('span').text().split('\n')[0]
           });
         });
       }
