@@ -15,17 +15,14 @@ A program to automatically list items on [Restocks](https://restocks.net/) and s
 **Install Required Packages Using NPM**
 
 1. CD to directory of program
-2. Run
-
-```
-npm i
-```
+2. Run `npm i`
 
 ## Setup
 
 ### Settings
 
 > The following settings are located in the /config folder
+
 > Variables that have an asterix (*) at the start are optional (`*variable`)
 
 #### Config
