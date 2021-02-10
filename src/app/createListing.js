@@ -9,20 +9,20 @@ const waitFor = (ms) => new Promise((res) => setTimeout(res, ms));
 module.exports = (rSes, prodId, sizeId) => {
   return new Promise(async (resolve, reject) => {
     try {
-      let listingPrice = parseFloat(await askForInput('Listing price: €'));
+      let listingPrice = parseFloat(await askForInput('Listing price: £'));
       const sellMethod = await getSaleMethod();
       const quantity = await askForInput('Amount of times to create this listing:');
 
       if (isNaN(listingPrice)) {
         const res = await rSes({
-          uri: `https://restocks.net/product/get-lowest-price/${prodId}/${sizeId}`,
+          uri: `https://restocks.co.uk/product/get-lowest-price/${prodId}/${sizeId}`,
           json: true,
         });
         if (typeof res !== 'number') throw new Error('Error fetching lowest ask');
         if (res == 0) throw new Error('Lowest ask is 0');
         listingPrice = res + lowestAskDifference;
-        log.log(`Lowest ask -> € ${res}`);
-        log.log(`Using -> € ${listingPrice}`);
+        log.log(`Lowest ask -> £ ${res}`);
+        log.log(`Using -> £ ${listingPrice}`);
       }
 
       const formData = {
@@ -69,7 +69,7 @@ function createListing(rSes, formData) {
     try {
       const res = await rSes({
         method: 'POST',
-        uri: 'https://restocks.net/account/sell/create',
+        uri: 'https://restocks.co.uk/account/sell/create',
         headers: {
           authority: 'restocks.eu',
           accept: 'application/json, text/javascript, */*; q=0.01',
@@ -77,11 +77,11 @@ function createListing(rSes, formData) {
           'user-agent':
             'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36',
           'content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
-          origin: 'https://restocks.net',
+          origin: 'https://restocks.co.uk',
           'sec-fetch-site': 'same-origin',
           'sec-fetch-mode': 'cors',
           'sec-fetch-dest': 'empty',
-          referer: 'https://restocks.net/account/sell',
+          referer: 'https://restocks.co.uk/account/sell',
           'accept-language': 'en-US,en;q=0.9',
         },
         form: formData,

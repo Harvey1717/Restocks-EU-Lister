@@ -17,7 +17,7 @@ const rSes = request.defaults({
   jar: request.jar(),
 });
 
-log.message('RESTOCKS.EU AUTO LISTER');
+log.message('RESTOCKS LISTER & SCANNER');
 
 (async () => {
   try {
@@ -30,7 +30,7 @@ log.message('RESTOCKS.EU AUTO LISTER');
         const status = await login(rSes);
         log.log(`LOG IN SUCCESS -> "${status}"`);
         scan(rSes, saleMethod);
-        await waitFor(900000);
+        await waitFor(900000); // 15 Minutes
       }
     }
   } catch (ex) {

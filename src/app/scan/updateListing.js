@@ -15,7 +15,7 @@ module.exports = (rSes, c, productId, lowestAsk, saleMethod) => {
       }
       */
       const res = await rSes({
-        uri: 'https://restocks.net/account/listings/edit',
+        uri: 'https://restocks.co.uk/account/listings/edit',
         method: 'POST',
         form: {
           _token: await getCsrfToken(rSes),
@@ -25,7 +25,7 @@ module.exports = (rSes, c, productId, lowestAsk, saleMethod) => {
         json: true,
       });
 
-      if (res.success) log.msuccess(productId, `LISTING UPDATED -> €${userSetPrice}`);
+      if (res.success) log.msuccess(productId, `LISTING UPDATED -> £${userSetPrice}`);
       else log.error(`LISTING ERROR -> SUCCESS "${success}"`);
       resolve();
     } catch (ex) {

@@ -14,7 +14,7 @@ module.exports = (rSes) => {
         ])
         .then(async (answer) => {
           const res = await rSes({
-            uri: 'https://restocks.net/shop/search',
+            uri: 'https://restocks.co.uk/shop/search',
             qs: {
               q: answer.input,
               page: '1',
