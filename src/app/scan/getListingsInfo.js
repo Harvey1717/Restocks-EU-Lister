@@ -41,7 +41,7 @@ module.exports = (rSes, saleMethod) => {
 
         listings.each((i, elem) => {
           listingsInfo.push({
-            listingPrice: $(elem).find('.storeprice__value').text(),
+            listingPrice: $(elem).find('.storeprice__value').text().split(' ')[1],
             productId: $(elem).find('.productid').val(),
             baseProductId: $(elem).find('.baseproductid').val(),
             sizeId: $(elem).find('.sizeid').val(),
