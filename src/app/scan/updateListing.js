@@ -14,17 +14,18 @@ module.exports = (rSes, c, productId, lowestAsk, saleMethod) => {
         userSetPrice = lowestAsk + specificConfigForListing.lowestAskDifference;
       }
       */
+
       const res = await rSes({
         uri: 'https://restocks.co.uk/account/listings/edit',
         method: 'POST',
         form: {
           _token: await getCsrfToken(rSes),
           id: productId,
-          price: getPayout(userSetPrice, saleMethod),
+          store_price: userSetPrice,
         }, //* Price = Payout
         json: true,
       });
-
+      
       if (res.success) log.msuccess(productId, `LISTING UPDATED -> £${userSetPrice}`);
       else log.error(`LISTING ERROR -> SUCCESS "${success}"`);
       resolve();
