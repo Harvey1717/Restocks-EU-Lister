@@ -33,11 +33,11 @@ module.exports = (rSes, c, listing) => {
       if (parseFloat(lowestAsk) < parseFloat(listingPrice)) {
         // const percentageDecrease = ((parseFloat(listingPrice) - parseFloat(res)) / parseFloat(listingPrice)) * 100;
         //if (percentageDecrease >= 5) throw new Error('New listing price is more than 5% lower than current');
-        log.mwarn(productId, `LISTING PRICE [€${listingPrice}] IS HIGHER THAN LOWEST ASK [€${lowestAsk}]`);
+        log.mwarn(productId, `LISTING PRICE [£${listingPrice}] IS HIGHER THAN LOWEST ASK [£${lowestAsk}]`);
         return resolve({ changeNeeded: true, lowestAsk: lowestAsk });
         // Lowest ask lower than listing price -> Increase listing price
       } else if (parseFloat(lowestAsk) > parseFloat(listingPrice)) {
-        log.mwarn(productId, `LISTING PRICE [€${listingPrice}] IS LOWER THAN LOWEST ASK [€${lowestAsk}]`);
+        log.mwarn(productId, `LISTING PRICE [£${listingPrice}] IS LOWER THAN LOWEST ASK [£${lowestAsk}]`);
         return resolve({ changeNeeded: true, lowestAsk: lowestAsk });
         // Lowest ask is equal to listing price
       } else {

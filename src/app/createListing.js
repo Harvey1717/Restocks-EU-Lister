@@ -9,7 +9,7 @@ const waitFor = (ms) => new Promise((res) => setTimeout(res, ms));
 module.exports = (rSes, prodId, sizeId) => {
   return new Promise(async (resolve, reject) => {
     try {
-      let listingPrice = parseFloat(await askForInput('Listing price: €'));
+      let listingPrice = parseFloat(await askForInput('Listing price: £'));
       const sellMethod = await getSaleMethod();
       const quantity = await askForInput('Amount of times to create this listing:');
 
@@ -21,8 +21,8 @@ module.exports = (rSes, prodId, sizeId) => {
         if (typeof res !== 'number') throw new Error('Error fetching lowest ask');
         if (res == 0) throw new Error('Lowest ask is 0');
         listingPrice = res + lowestAskDifference;
-        log.log(`Lowest ask -> € ${res}`);
-        log.log(`Using -> € ${listingPrice}`);
+        log.log(`Lowest ask -> £ ${res}`);
+        log.log(`Using -> £ ${listingPrice}`);
       }
 
       const formData = {
