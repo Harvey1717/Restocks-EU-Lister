@@ -1,6 +1,7 @@
 # RESTOCKS.NET AUTO LISTER & SCANNER
 
-A program to automatically list items on [Restocks](https://restocks.net/) and scan existing listings to adjust the price.
+A program to automatically list items on [Restocks](https://restocks.co.uk/) and scan existing listings to adjust the price.
+
 # Table of Contents
 
 - [Installation](#installation)
@@ -29,13 +30,12 @@ A program to automatically list items on [Restocks](https://restocks.net/) and s
 
 The JSON tasks file for this site has the following variables:
 
-- `email` - Your Restocks account email 
+- `email` - Your Restocks account email
 - `password` - Your Restocks account password
 - `delay` - Delay in ms, used in between listing products
 - `lowestAskDifference` - ?
-- `whitelistedProducts` - An array of products to ignore during scanning, the array items can be a product name string or a dictionary containing the `name` and `sizeIDs` values (see example below) 
+- `whitelistedProducts` - An array of products to ignore during scanning, the array items can be a product name string or a dictionary containing the `name` and `sizeIDs` values (see example below)
 - `specificConfig` - ?
-
 
 Example config:
 
@@ -55,10 +55,11 @@ Example config:
   ]
 }
 ```
+
 ## Running The Bot
 
 Start the program `node .`
 
 ---
 
-Made with ❤  by [@dmc8787](https://twitter.com/dmc8787) & [@paymentdeclined](https://twitter.com/paymentdecIined)
+Made with ❤ by [@dmc8787](https://twitter.com/dmc8787) & [@paymentdeclined](https://twitter.com/paymentdecIined)

@@ -4,7 +4,7 @@ module.exports = (rSes, selectedProd) => {
   return new Promise(async (resolve, reject) => {
     try {
       const res = await rSes({
-        uri: `https://restocks.net/product/get-sizes/${selectedProd.id}`,
+        uri: `https://restocks.co.uk/product/get-sizes/${selectedProd.id}`,
         json: true,
       });
       const sizes = res.map((size) => size.name);

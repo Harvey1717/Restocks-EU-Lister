@@ -15,7 +15,7 @@ module.exports = (rSes, prodId, sizeId) => {
 
       if (isNaN(listingPrice)) {
         const res = await rSes({
-          uri: `https://restocks.net/product/get-lowest-price/${prodId}/${sizeId}`,
+          uri: `https://restocks.co.uk/product/get-lowest-price/${prodId}/${sizeId}`,
           json: true,
         });
         if (typeof res !== 'number') throw new Error('Error fetching lowest ask');
@@ -69,7 +69,7 @@ function createListing(rSes, formData) {
     try {
       const res = await rSes({
         method: 'POST',
-        uri: 'https://restocks.net/account/sell/create',
+        uri: 'https://restocks.co.uk/account/sell/create',
         headers: {
           authority: 'restocks.eu',
           accept: 'application/json, text/javascript, */*; q=0.01',
@@ -77,11 +77,11 @@ function createListing(rSes, formData) {
           'user-agent':
             'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36',
           'content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
-          origin: 'https://restocks.net',
+          origin: 'https://restocks.co.uk',
           'sec-fetch-site': 'same-origin',
           'sec-fetch-mode': 'cors',
           'sec-fetch-dest': 'empty',
-          referer: 'https://restocks.net/account/sell',
+          referer: 'https://restocks.co.uk/account/sell',
           'accept-language': 'en-US,en;q=0.9',
         },
         form: formData,
