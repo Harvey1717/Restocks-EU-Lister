@@ -22,8 +22,13 @@ module.exports = (rSes, c, listing) => {
       );
 
       if (whitelistedProducts.includes(productName)) {
-        log.mlog(productId, 'PRODUCT WHITELISTED');
-        return resolve({ changeNeeded: false });
+        if (parseFloat(listingPrice) < 999) {
+          log.mlog(productId, 'PRODUCT WHITELISTED => UPDATING TO £999');
+          return resolve({ changeNeeded: true, lowestAsk: 999 });
+        } else {
+          log.mlog(productId, 'PRODUCT WHITELISTED');
+          return resolve({ changeNeeded: false });
+        }
       } else if (specificWhitelistFilter.length > 0) {
         log.mlog(productId, 'PRODUCT WITH SPECIFIC SIZE IS WHITELISTED');
         return resolve({ changeNeeded: false });
